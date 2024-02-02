@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,23 +6,27 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float runSpeed = 7f;
     [SerializeField] float jumpSpeed = 5f;
+    [SerializeField] float climbSpeed = 5f;
 
     Vector2 moveInput;
     Rigidbody2D playerRigidbody;
     Animator playerAnimator;
     CapsuleCollider2D playerCapsuleCollider;
+    float gravityScaleAtStart;
 
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
         playerCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        gravityScaleAtStart = playerRigidbody.gravityScale;
     }
 
     void Update()
     {
         Run();
         FlipSprite();
+        ClimbLadder();
     }
 
     void OnMove(InputValue value)
@@ -42,8 +43,6 @@ public class PlayerMovement : MonoBehaviour
             playerRigidbody.velocity += new Vector2(0f, jumpSpeed);
         }
     }
-
-
 
     void Run()
     {
@@ -62,6 +61,24 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector2(MathF.Sign(playerRigidbody.velocity.x), 1f);
         }
+    }
+
+    void ClimbLadder()
+    {
+        if (!playerCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+            playerRigidbody.gravityScale = gravityScaleAtStart;
+            playerAnimator.SetBool("isClimbing", false);
+            return;
+        }
+
+
+        Vector2 climbVelocity = new Vector2(playerRigidbody.velocity.x, moveInput.y * climbSpeed);
+        playerRigidbody.velocity = climbVelocity;
+        playerRigidbody.gravityScale = 0f;
+
+        bool playerHasVerticalSpeed = Mathf.Abs(playerRigidbody.velocity.y) > Mathf.Epsilon;
+        playerAnimator.SetBool("isClimbing", playerHasVerticalSpeed);
 
     }
 }
