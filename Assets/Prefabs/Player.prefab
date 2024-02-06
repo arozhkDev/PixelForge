@@ -223,6 +223,7 @@ MonoBehaviour:
   deathKick: {x: 0, y: 20}
   bullet: {fileID: 1596404892838277235, guid: 8337672cde85d0f42a8f0164c273ea33, type: 3}
   gun: {fileID: 78651908760905444}
+  deathSFX: {fileID: 8300000, guid: 5e588a47ef3699943a10761b45d992cf, type: 3}
 --- !u!61 &4613185885530287183
 BoxCollider2D:
   m_ObjectHideFlags: 0

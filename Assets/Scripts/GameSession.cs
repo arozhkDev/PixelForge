@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -11,7 +8,6 @@ public class GameSession : MonoBehaviour
     [SerializeField] int score = 0;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
-
 
     void Awake()
     {
@@ -49,6 +45,12 @@ public class GameSession : MonoBehaviour
     {
         score += pointsToAdd;
         scoreText.text = $"{score}$";
+    }
+
+    public void Heal(int pointsToAdd)
+    {
+        playerLives += pointsToAdd;
+        livesText.text = playerLives.ToString();
     }
 
     void RestartLevel()

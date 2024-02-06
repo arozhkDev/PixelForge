@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinPickup : MonoBehaviour
@@ -14,8 +12,13 @@ public class CoinPickup : MonoBehaviour
         if (other.tag == "Player" && !isCollected)
         {
             isCollected = true;
+
+            GameObject audioSourceObject = new GameObject("AudioSource");
+            AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
+            audioSource.PlayOneShot(coinPickupSFX);
+            Destroy(audioSourceObject, coinPickupSFX.length);
+
             FindObjectOfType<GameSession>().AddToScore(pointsForCoinPickup);
-            AudioSource.PlayClipAtPoint(coinPickupSFX, Camera.main.transform.position);
             gameObject.SetActive(false);
             Destroy(gameObject);
         }

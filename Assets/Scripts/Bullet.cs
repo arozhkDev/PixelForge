@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 20f;
     Rigidbody2D bulletRigidbody;
-    PlayerMovement player;
+    Player player;
     float xSpeed;
 
     void Start()
     {
         bulletRigidbody = GetComponent<Rigidbody2D>();
-        player = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<Player>();
         xSpeed = player.transform.localScale.x * bulletSpeed;
     }
 
