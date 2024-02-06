@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
     [SerializeField] AudioClip deathSFX;
+    [SerializeField] AudioClip waterSplashSFX;
 
 
     Vector2 moveInput;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     BoxCollider2D playerFeetCollider;
     float gravityScaleAtStart;
     bool isAlive = true;
+    bool isPlayingWaterSplash = false;
 
     void Start()
     {
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
         Run();
         FlipSprite();
         ClimbLadder();
+        Swim();
         Die();
     }
 
@@ -123,5 +126,24 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         FindObjectOfType<GameSession>().ProcessPlayerDeath();
+    }
+
+    void Swim()
+    {
+        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Water")) && !isPlayingWaterSplash)
+        {
+            isPlayingWaterSplash = true;
+            GameObject audioSourceObject = new GameObject("AudioSource");
+            AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
+            audioSource.PlayOneShot(waterSplashSFX);
+            Destroy(audioSourceObject, waterSplashSFX.length);
+            StartCoroutine(ResetWaterSplashFlag());
+        }
+    }
+
+    IEnumerator ResetWaterSplashFlag()
+    {
+        yield return new WaitForSeconds(waterSplashSFX.length);
+        isPlayingWaterSplash = false;
     }
 }

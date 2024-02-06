@@ -224,6 +224,7 @@ MonoBehaviour:
   bullet: {fileID: 1596404892838277235, guid: 8337672cde85d0f42a8f0164c273ea33, type: 3}
   gun: {fileID: 78651908760905444}
   deathSFX: {fileID: 8300000, guid: 5e588a47ef3699943a10761b45d992cf, type: 3}
+  waterSplashSFX: {fileID: 8300000, guid: 47cd93e3ee418f044b8f6da0154b5d85, type: 3}
 --- !u!61 &4613185885530287183
 BoxCollider2D:
   m_ObjectHideFlags: 0
