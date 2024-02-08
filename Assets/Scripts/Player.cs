@@ -15,12 +15,11 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip deathSFX;
     [SerializeField] AudioClip waterSplashSFX;
 
-
     Vector2 moveInput;
     Rigidbody2D playerRigidbody;
     Animator playerAnimator;
     CapsuleCollider2D playerBodyCollider;
-    BoxCollider2D playerFeetCollider;
+    public BoxCollider2D playerFeetCollider;
     float gravityScaleAtStart;
     bool isAlive = true;
     bool isPlayingWaterSplash = false;

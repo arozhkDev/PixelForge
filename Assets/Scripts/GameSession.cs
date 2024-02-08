@@ -8,9 +8,13 @@ public class GameSession : MonoBehaviour
     [SerializeField] int score = 0;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
+    Player player;
+    [SerializeField] AudioClip backgroundMusic;
+    AudioSource audioSource;
 
     void Awake()
     {
+        player = FindObjectsOfType<Player>()[0];
         int numGameSessions = FindObjectsOfType<GameSession>().Length;
 
         if (numGameSessions > 1)
@@ -66,5 +70,14 @@ public class GameSession : MonoBehaviour
         FindObjectOfType<ScenePersist>().ResetScenePersist();
         SceneManager.LoadScene(0);
         Destroy(gameObject);
+    }
+
+    public void PlayBackgroundMusic()
+    {
+        GameObject audioSourceObject = new GameObject("AudioSource");
+        audioSource = audioSourceObject.AddComponent<AudioSource>();
+        audioSource.clip = backgroundMusic;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 }
