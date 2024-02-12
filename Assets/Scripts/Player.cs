@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     Rigidbody2D playerRigidbody;
     Animator playerAnimator;
     CapsuleCollider2D playerBodyCollider;
-    public BoxCollider2D playerFeetCollider;
+    BoxCollider2D playerFeetCollider;
     float gravityScaleAtStart;
     bool isAlive = true;
     bool isPlayingWaterSplash = false;
